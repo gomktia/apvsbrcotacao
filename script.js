@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 Nome: nome || 'Não informado',
                 Telefone: telefone,
                 Origem: origem,
-                Data: now.toLocaleDateString('pt-BR'),
-                Horario: now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+                Data: now.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+                'Horário': now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }),
                 _subject: 'Nova Cotação APVS - ' + (nome || telefone),
                 _template: 'table'
             })
