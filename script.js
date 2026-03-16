@@ -176,9 +176,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             clearLengthError(phoneInput);
-            alert('Dados enviados com sucesso!');
-            closeCotacaoPopup();
             popupForm.reset();
+            window.location.href = 'obrigado.html';
         });
     }
 
@@ -197,8 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             clearLengthError(phoneInput);
-            alert('Dados enviados com sucesso!');
             contactForm.reset();
+            window.location.href = 'obrigado.html';
         });
     }
 
