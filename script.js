@@ -161,12 +161,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ===== ENVIO DE FORMULARIO POR EMAIL =====
+    function enviarFormulario(nome, telefone, origem) {
+        var now = new Date();
+        return fetch('https://formsubmit.co/ajax/aldirgsindra@gmail.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                Nome: nome || 'Não informado',
+                Telefone: telefone,
+                Origem: origem,
+                Data: now.toLocaleDateString('pt-BR'),
+                Horario: now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+                _subject: 'Nova Cotação APVS - ' + (nome || telefone),
+                _template: 'table'
+            })
+        });
+    }
+
     // ===== FORM SUBMISSION (Popup) =====
     var popupForm = document.getElementById('popup-form');
     if (popupForm) {
         popupForm.addEventListener('submit', function (e) {
             e.preventDefault();
             var phoneInput = document.getElementById('popup-phone');
+            var nameInput = document.getElementById('popup-name');
             var phoneNumber = phoneInput.value.replace(/[^0-9]/g, '');
 
             if (phoneNumber.length !== 11) {
@@ -176,8 +198,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             clearLengthError(phoneInput);
-            popupForm.reset();
-            window.location.href = 'obrigado.html';
+
+            var nome = nameInput ? nameInput.value : '';
+            var telefone = phoneInput.value;
+
+            enviarFormulario(nome, telefone, 'Popup Cotação').finally(function () {
+                popupForm.reset();
+                window.location.href = 'obrigado.html';
+            });
         });
     }
 
@@ -187,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
             var phoneInput = document.getElementById('contact-phone');
+            var nameInput = document.getElementById('contact-name');
             var phoneNumber = phoneInput.value.replace(/[^0-9]/g, '');
 
             if (phoneNumber.length !== 11) {
@@ -196,8 +225,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             clearLengthError(phoneInput);
-            contactForm.reset();
-            window.location.href = 'obrigado.html';
+
+            var nome = nameInput ? nameInput.value : '';
+            var telefone = phoneInput.value;
+
+            enviarFormulario(nome, telefone, 'Formulário Quem Somos').finally(function () {
+                contactForm.reset();
+                window.location.href = 'obrigado.html';
+            });
         });
     }
 
